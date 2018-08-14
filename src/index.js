@@ -14,7 +14,7 @@ ReactDOM.render(
         <div>
             <Route exact path="/" component={ListItems} />
             <Route path="/additem" component={AddItem} />
-            <Route path="/edititem/:id" exact component={EditItem} />
+            <Route path="/edititem/:itemId" exact component={EditItem} />
         </div>
     </Router>
     , document.getElementById('root'));

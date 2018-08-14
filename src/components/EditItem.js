@@ -3,15 +3,36 @@ import '../App.css';
 import firebase from 'firebase';
 
 class editItem extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        console.log(this.props.match.params.itemId);
         this.state = {
-            currentItem: '',
-            username: '',
-            items: []
+            id: this.props.match.params.itemId,
+            user: '',
+            title: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        console.log(this.state.id);
+        const itemsRef = firebase.database().ref('items');
+        itemsRef.on('value', (snapshot) => {
+            let items = snapshot.val();
+            let newState = [];
+            for (let item in items) {
+                newState.push({
+                    id: item,
+                    title: items[item].title,
+                    user: items[item].user
+                });
+            }
+            this.setState({
+                items: newState
+            });
+        });
+        
     }
 
     handleChange(e) {
@@ -36,6 +57,7 @@ class editItem extends Component {
     render() {
         return (
             <div className='addItem'>
+                {console.log(this.state)}
                 <header>
                     <div className='wrapper'>
                         <h1>Edit Item</h1>

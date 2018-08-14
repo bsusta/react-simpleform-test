@@ -12,6 +12,7 @@ class ListItems extends Component {
             items: []
         }
         this.handleChange = this.handleChange.bind(this);
+        
     }
 
     handleChange(e) {
@@ -41,10 +42,14 @@ class ListItems extends Component {
                 items: newState
             });
         });
+        
     }
+
+
 
     render() {
         return (
+            
             <div className='app'>
                 <header>
                     <div className='wrapper'>
@@ -56,7 +61,7 @@ class ListItems extends Component {
                     <Link to={`/additem`}>
                         <button>AddItem</button>
                     </Link>
-                    <section className='display-item'>
+                    <section className='display-item'>                
                         <div className="wrapper">
                             <ul>
                                 {this.state.items.map((item) => {
@@ -66,7 +71,7 @@ class ListItems extends Component {
                                             <p>{item.id}</p>
                                             <p>brought by: {item.user}</p>
                                             <button onClick={() => this.removeItem(item.id)}>Remove Item</button>
-                                            <Link to={{ pathname: `/edititem/:item.id` }}>
+                                            <Link to={{ pathname: `/edititem/`+item.id}}>
                                                 <button>EditItem</button>
                                             </Link>
                                         </li>
