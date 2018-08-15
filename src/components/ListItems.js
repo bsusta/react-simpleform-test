@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase';
-import BootstrapTable from 'react-bootstrap-table-next';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 
-const columns = [{
-    dataField: 'id',
-    text: 'ID'
-}, {
-    dataField: 'title',
-    text: 'Title'
-}, {
-    dataField: 'user',
-    text: 'User'
-}];
 
 
 
@@ -73,40 +61,39 @@ class ListItems extends Component {
                     <Link to={`/additem`}>
                         <button>AddItem</button>
                     </Link>
+                </div>
+                <div className='container'>
                     <section className='display-item'>
                         <div className="wrapper">
-                            <BootstrapTable keyField='id' striped
-                                hover
-                                condensed
-                                data={this.state.items} columns={columns} />
                             <Table striped>
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Username</th>
+                                        <th>Title</th>
+                                        <th>User</th>
+                                        <th>Delete</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+                                    {this.state.items.map((item) => {
+                                        return (
+                                            <tr key={item.id}>
+                                                <td>{item.id}</td>
+                                                <td>{item.title}</td>
+                                                <td>{item.user}</td>
+                                                <td>
+                                                    <button onClick={() => this.removeItem(item.id)}>Remove</button>
+                                                </td>
+                                                <td>
+                                                    <Link to={{ pathname: `/edititem/` + item.id }}>
+                                                        <button>Edit</button>
+                                                    </Link>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                    }
                                 </tbody>
                             </Table>
                             {/*

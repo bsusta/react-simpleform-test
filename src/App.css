@@ -54,13 +54,10 @@ header i {
 }
 
 .display-item {
-  width: 65%;
-  margin-left: 50px;
+  width: 100%;
 }
 
 .display-item button {
-  margin-top: 20px;
-  margin-left: auto;
   display: block;
 }
 
@@ -120,15 +117,3 @@ form button {
   margin-top: 10px;
 }
 
-button {
-  border-radius: 2px;
-  min-width: 88px;
-  background-color: #FA6900;
-  cursor: pointer;
-  border: 0;
-  min-width: 120px;
-  color: #fff;
-  font-size: 14px;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-  padding: 10px 6px;
-}
