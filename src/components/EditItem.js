@@ -10,7 +10,8 @@ class editItem extends Component {
             user: '',
             title: '',
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeUser = this.handleChangeUser.bind(this);
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -23,30 +24,31 @@ class editItem extends Component {
 
     }
 
-    handleChange(e) {
+    handleChangeUser(e) {
         this.setState({
-            [e.target.name]: e.target.value
+            user: e.target.value
         });
     }
+
+    handleChangeTitle(e) {
+        this.setState({
+            title: e.target.value
+        });
+    }
+
     handleSubmit(e) {
         e.preventDefault();
-        const itemsRef = firebase.database().ref('items');
-        const item = {
-            title: this.state.currentItem,
-            user: this.state.username
-        }
-        itemsRef.push(item);
-        this.setState({
-            currentItem: '',
-            username: ''
+        firebase.database().ref('items/' + this.state.id).update({
+            user: this.state.user,
+            title: this.state.title,
         });
         this.props.history.goBack();
     }
+
     render() {
         return (
-            <div className='addItem'>
-                {console.log(this.state)}
-                <header>
+            <div className='addItem' >
+                < header >
                     <div className='wrapper'>
                         <h1>Edit Item</h1>
 
@@ -55,13 +57,13 @@ class editItem extends Component {
                 <div className='container'>
                     <section className="add-item">
                         <form onSubmit={this.handleSubmit}>
-                            <input type="text" name="username" placeholder="What's your name?" onChange={this.handleChange} value={this.state.user} />
-                            <input type="text" name="currentItem" placeholder="What are you bringing ?" onChange={this.handleChange} value={this.state.title} />
-                            <button>Add Item</button>
+                            <input type="text" name="username" placeholder="What's your name?" onChange={this.handleChangeUser} value={this.state.user} />
+                            <input type="text" name="currentItem" placeholder="What are you bringing ?" onChange={this.handleChangeTitle} value={this.state.title} />
+                            <button>Save item</button>
                         </form>
                     </section>
                 </div>
-            </div>
+            </div >
         );
     }
 }
