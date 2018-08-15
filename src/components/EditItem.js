@@ -5,7 +5,6 @@ import firebase from 'firebase';
 class editItem extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.match.params.itemId);
         this.state = {
             id: this.props.match.params.itemId,
             user: '',
@@ -16,23 +15,12 @@ class editItem extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state.id);
-        const itemsRef = firebase.database().ref('items');
+        const itemsRef = firebase.database().ref('items/' + this.state.id);
         itemsRef.on('value', (snapshot) => {
-            let items = snapshot.val();
-            let newState = [];
-            for (let item in items) {
-                newState.push({
-                    id: item,
-                    title: items[item].title,
-                    user: items[item].user
-                });
-            }
-            this.setState({
-                items: newState
-            });
+            let item = snapshot.val();
+            this.setState({ user: snapshot.val().user, title: snapshot.val().title });
         });
-        
+
     }
 
     handleChange(e) {
@@ -67,8 +55,8 @@ class editItem extends Component {
                 <div className='container'>
                     <section className="add-item">
                         <form onSubmit={this.handleSubmit}>
-                            <input type="text" name="username" placeholder="What's your name?" onChange={this.handleChange} value={this.state.username} />
-                            <input type="text" name="currentItem" placeholder="What are you bringing ?" onChange={this.handleChange} value={this.state.currentItem} />
+                            <input type="text" name="username" placeholder="What's your name?" onChange={this.handleChange} value={this.state.user} />
+                            <input type="text" name="currentItem" placeholder="What are you bringing ?" onChange={this.handleChange} value={this.state.title} />
                             <button>Add Item</button>
                         </form>
                     </section>
